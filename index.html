@@ -5,14 +5,54 @@
   <meta charset="utf-8">
   <title>Matthew Connelly's Personal Page</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+	* {
+		font-family: sans-serif;
+		color: #333;
+	}
+
+	h1 {
+		text-align: center;
+		font-size: 3em;
+	}
+
+	img {
+		width: 40%;
+		/* margin: 0 auto; */
+		/* display: block; */
+		float: left;
+		margin-right: 20px;
+	}
+	
+	@media screen and (max-width: 700px) {
+		img {
+			width: 100%;
+			float: none;
+		}
+	}
+
+	.about {
+		font-size: 1.5em;
+	}
+
+</style>
+
 </head>
 
 <body>
-	<p>Redirecting...</p>
-  
-	<script>
-		window.location.href = "https://github.com/mattconn";
-	</script>
+	<div id="wrapper" style="width: 80%; margin: 50px auto;">
+		<h1>Matthew Connelly's Personal Page</h1>
+		<img src="me_bklynjs.png" />
+		<section class="about">
+			<p>Hi, I'm Matthew Connelly, a CompSci undergrad at the College of Staten Island.</p>
+			<p>My favorite programming languages are C++ and JavaScript. The photo included is of me speaking at Brooklyn JS about JavaScript game development. I'm sorry, I don't know who took the photo.</p>
+			<p>I'm currently working on a 2D game engine in C++ using SDL2.</p>
+			<p>My GitHub is <a href="https://github.com/mattConn" target="_blank">here</a>, and my Twitter is <a href="https://twitter.com/mattconndev" target="_blank">here</a>. You can also contact me at matthew.b.connelly at gmail.</p>
+		</section>
+	</div>
+	
 </body>
 
 </html>
