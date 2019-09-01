@@ -1,0 +1,1486 @@
+
+<!-- saved from url=(0065)https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Linux System Call Table</title>
+</head>
+
+<body bgcolor="#ffffff">
+
+<h2>Linux System Call Table</h2>
+
+<p>
+The following table lists the system calls for the Linux 2.2 kernel.
+It could also be thought of as an API for the interface between user
+space and kernel space.
+My motivation for making this table was to make programming in assembly
+language easier when using only system calls and not the C library
+(for more information on this topic, go to
+<a href="http://www.linuxassembly.org/">http://www.linuxassembly.org</a>).
+On the left are the numbers of the system calls. This number will be
+put in register %eax. On the right of the table are the types of values
+to be put into the remaining registers before calling the software interrupt
+'int 0x80'. After each syscall, an integer is returned in %eax.
+</p>
+
+<p>
+For convenience, links go from the "Name" column to the
+man page for most of the system calls.
+Links to the kernel source file where each system call is
+located are linked to in the column labelled "Source".
+(You can also <a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_offline.html">download</a> a version of
+this page which has links directly to the source that is installed on
+your system.)
+Links to definitions are provided for the parameters that are
+typedefs or structs.
+</p>
+
+
+<table border="1">
+<tbody><tr><th><nobr>%eax</nobr></th><th>Name</th><th>Source</th>
+<th><nobr>%ebx</nobr></th><th><nobr>%ecx</nobr></th><th><nobr>%edx</nobr></th><th><nobr>%esx</nobr></th><th><nobr>%edi</nobr></th></tr>
+
+<tr><td>1</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/exit.2.html">sys_exit</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/exit.c">kernel/exit.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>2</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fork.2.html">sys_fork</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/process.c">arch/i386/kernel/process.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pt_regs">struct pt_regs</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>3</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/read.2.html">sys_read</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned int</td><td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>4</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/write.2.html">sys_write</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned int</td><td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>5</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/open.2.html">sys_open</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td>int</td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>6</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/close.2.html">sys_close</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>unsigned int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>7</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/waitpid.2.html">sys_waitpid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/exit.c">kernel/exit.c</a></td>
+<td>pid_t</td><td>unsigned int *</td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>8</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/creat.2.html">sys_creat</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>9</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/link.2.html">sys_link</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>const char *</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>10</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/unlink.2.html">sys_unlink</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>11</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/execve.2.html">sys_execve</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/process.c">arch/i386/kernel/process.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pt_regs">struct pt_regs</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>12</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/chdir.2.html">sys_chdir</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>13</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/time.2.html">sys_time</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/time.c">kernel/time.c</a></td>
+<td>int *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>14</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mknod.2.html">sys_mknod</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#dev_t">dev_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>15</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/chmod.2.html">sys_chmod</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#mode_t">mode_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>16</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/lchown.2.html">sys_lchown</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>18</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/stat.2.html">sys_stat</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__old_kernel_stat">struct __old_kernel_stat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>19</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/lseek.2.html">sys_lseek</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#off_t">off_t</a></td><td>unsigned int</td><td>-</td><td>-</td></tr>
+
+<tr><td>20</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getpid.2.html">sys_getpid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>21</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mount.2.html">sys_mount</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/super.c">fs/super.c</a></td>
+<td>char *</td><td>char *</td><td>char *</td><td>-</td><td>-</td></tr>
+
+<tr><td>22</td><td>sys_oldumount</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/super.c">fs/super.c</a></td>
+<td>char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>23</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setuid.2.html">sys_setuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>24</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getuid.2.html">sys_getuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>25</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/stime.2.html">sys_stime</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/time.c">kernel/time.c</a></td>
+<td>int *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>26</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/ptrace.2.html">sys_ptrace</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/ptrace.c">arch/i386/kernel/ptrace.c</a></td>
+<td>long</td><td>long</td><td>long</td><td>long</td><td>-</td></tr>
+
+<tr><td>27</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/alarm.2.html">sys_alarm</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>unsigned int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>28</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fstat.2.html">sys_fstat</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__old_kernel_stat">struct __old_kernel_stat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>29</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/pause.2.html">sys_pause</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>30</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/utime.2.html">sys_utime</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#utimbuf">struct utimbuf *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>33</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/access.2.html">sys_access</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>34</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/nice.2.html">sys_nice</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>36</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sync.2.html">sys_sync</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/buffer.c">fs/buffer.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>37</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/kill.2.html">sys_kill</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>38</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/rename.2.html">sys_rename</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>const char *</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>39</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mkdir.2.html">sys_mkdir</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>40</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/rmdir.2.html">sys_rmdir</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>41</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/dup.2.html">sys_dup</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/fcntl.c">fs/fcntl.c</a></td>
+<td>unsigned int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>42</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/pipe.2.html">sys_pipe</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td>unsigned long *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>43</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/times.2.html">sys_times</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#tms">struct tms *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>45</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/brk.2.html">sys_brk</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mmap.c">mm/mmap.c</a></td>
+<td>unsigned long</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>46</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setgid.2.html">sys_setgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>47</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getgid.2.html">sys_getgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>48</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/signal.2.html">sys_signal</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__sighandler_t">__sighandler_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>49</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/geteuid.2.html">sys_geteuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>50</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getegid.2.html">sys_getegid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>51</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/acct.2.html">sys_acct</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/acct.c">kernel/acct.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>52</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/umount.2.html">sys_umount</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/super.c">fs/super.c</a></td>
+<td>char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>54</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/ioctl.2.html">sys_ioctl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/ioctl.c">fs/ioctl.c</a></td>
+<td>unsigned int</td><td>unsigned int</td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>55</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fcntl.2.html">sys_fcntl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/fcntl.c">fs/fcntl.c</a></td>
+<td>unsigned int</td><td>unsigned int</td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>57</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setpgid.2.html">sys_setpgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>59</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/olduname.2.html">sys_olduname</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#oldold_utsname">struct oldold_utsname *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>60</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/umask.2.html">sys_umask</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>61</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/chroot.2.html">sys_chroot</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>62</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/ustat.2.html">sys_ustat</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/super.c">fs/super.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#dev_t">dev_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#ustat">struct ustat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>63</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/dup2.2.html">sys_dup2</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/fcntl.c">fs/fcntl.c</a></td>
+<td>unsigned int</td><td>unsigned int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>64</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getppid.2.html">sys_getppid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>65</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getpgrp.2.html">sys_getpgrp</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>66</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setsid.2.html">sys_setsid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>67</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sigaction.2.html">sys_sigaction</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/signal.c">arch/i386/kernel/signal.c</a></td>
+<td>int</td><td>const <a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigaction">struct old_sigaction *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigaction">struct old_sigaction *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>68</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sgetmask.2.html">sys_sgetmask</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>69</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/ssetmask.2.html">sys_ssetmask</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>70</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setreuid.2.html">sys_setreuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>71</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setregid.2.html">sys_setregid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>72</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sigsuspend.2.html">sys_sigsuspend</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/signal.c">arch/i386/kernel/signal.c</a></td>
+<td>int</td><td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigset_t">old_sigset_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>73</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sigpending.2.html">sys_sigpending</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigset_t">old_sigset_t *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>74</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sethostname.2.html">sys_sethostname</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>75</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setrlimit.2.html">sys_setrlimit</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#rlimit">struct rlimit *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>76</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getrlimit.2.html">sys_getrlimit</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#rlimit">struct rlimit *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>77</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getrusage.2.html">sys_getrusage</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#rusage">struct rusage *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>78</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/gettimeofday.2.html">sys_gettimeofday</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/time.c">kernel/time.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timezone">struct timezone *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>79</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/settimeofday.2.html">sys_settimeofday</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/time.c">kernel/time.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timezone">struct timezone *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>80</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getgroups.2.html">sys_getgroups</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>81</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setgroups.2.html">sys_setgroups</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>82</td><td>old_select</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sel_arg_struct">struct sel_arg_struct *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>83</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/symlink.2.html">sys_symlink</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/namei.c">fs/namei.c</a></td>
+<td>const char *</td><td>const char *</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>84</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/lstat.2.html">sys_lstat</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__old_kernel_stat">struct __old_kernel_stat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>85</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/readlink.2.html">sys_readlink</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>const char *</td><td>char *</td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>86</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/uselib.2.html">sys_uselib</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/exec.c">fs/exec.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>87</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/swapon.2.html">sys_swapon</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/swapfile.c">mm/swapfile.c</a></td>
+<td>const char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>88</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/reboot.2.html">sys_reboot</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td>int</td><td>int</td><td>void *</td><td>-</td></tr>
+
+<tr><td>89</td><td>old_readdir</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/readdir.c">fs/readdir.c</a></td>
+<td>unsigned int</td><td>void *</td><td>unsigned int</td><td>-</td><td>-</td></tr>
+
+<tr><td>90</td><td>old_mmap</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#mmap_arg_struct">struct mmap_arg_struct *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>91</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/munmap.2.html">sys_munmap</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mmap.c">mm/mmap.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>92</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/truncate.2.html">sys_truncate</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td>unsigned long</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>93</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/ftruncate.2.html">sys_ftruncate</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>unsigned int</td><td>unsigned long</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>94</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fchmod.2.html">sys_fchmod</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#mode_t">mode_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>95</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fchown.2.html">sys_fchown</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>96</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getpriority.2.html">sys_getpriority</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>97</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setpriority.2.html">sys_setpriority</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td>int</td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>99</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/statfs.2.html">sys_statfs</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#statfs">struct statfs *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>100</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fstatfs.2.html">sys_fstatfs</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#statfs">struct statfs *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>101</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/ioperm.2.html">sys_ioperm</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/ioport.c">arch/i386/kernel/ioport.c</a></td>
+<td>unsigned long</td><td>unsigned long</td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>102</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/socketcall.2.html">sys_socketcall</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/net/socket.c">net/socket.c</a></td>
+<td>int</td><td>unsigned long *</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>103</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/syslog.2.html">sys_syslog</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/printk.c">kernel/printk.c</a></td>
+<td>int</td><td>char *</td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>104</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setitimer.2.html">sys_setitimer</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/itimer.c">kernel/itimer.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#itimerval">struct itimerval *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#itimerval">struct itimerval *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>105</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getitimer.2.html">sys_getitimer</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/itimer.c">kernel/itimer.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#itimerval">struct itimerval *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>106</td><td>sys_newstat</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#stat">struct stat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>107</td><td>sys_newlstat</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#stat">struct stat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>108</td><td>sys_newfstat</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/stat.c">fs/stat.c</a></td>
+<td>unsigned int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#stat">struct stat *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>109</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/uname.2.html">sys_uname</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_utsname">struct old_utsname *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>110</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/iopl.2.html">sys_iopl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/ioport.c">arch/i386/kernel/ioport.c</a></td>
+<td>unsigned long</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>111</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/vhangup.2.html">sys_vhangup</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>112</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/idle.2.html">sys_idle</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/process.c">arch/i386/kernel/process.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>113</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/vm86.2.html">sys_vm86old</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/vm86.c">arch/i386/kernel/vm86.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#vm86plus_struct">struct vm86plus_struct *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>114</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/wait4.2.html">sys_wait4</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/exit.c">kernel/exit.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td>unsigned long *</td><td>int options</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#rusage">struct rusage *</a></td><td>-</td></tr>
+
+<tr><td>115</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/swapoff.2.html">sys_swapoff</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/swapfile.c">mm/swapfile.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>116</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sysinfo.2.html">sys_sysinfo</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/info.c">kernel/info.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sysinfo">struct sysinfo *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>117</td><td>sys_ipc<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#note117">(*Note)</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uint">uint</a></td><td>int</td><td>int</td><td>int</td><td>void *</td></tr>
+
+<tr><td>118</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fsync.2.html">sys_fsync</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/buffer.c">fs/buffer.c</a></td>
+<td>unsigned int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>119</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sigreturn.2.html">sys_sigreturn</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/signal.c">arch/i386/kernel/signal.c</a></td>
+<td>unsigned long</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>120</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/clone.2.html">sys_clone</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/process.c">arch/i386/kernel/process.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pt_regs">struct pt_regs</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>121</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setdomainname.2.html">sys_setdomainname</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>char *</td><td>int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>122</td><td>sys_newuname</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#new_utsname">struct new_utsname *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>123</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/modify_ldt.2.html">sys_modify_ldt</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/ldt.c">arch/i386/kernel/ldt.c</a></td>
+<td>int</td><td>void *</td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>124</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/adjtimex.2.html">sys_adjtimex</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/time.c">kernel/time.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timex">struct timex *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>125</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mprotect.2.html">sys_mprotect</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mprotect.c">mm/mprotect.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>126</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sigprocmask.2.html">sys_sigprocmask</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigset_t">old_sigset_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigset_t">old_sigset_t *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>127</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/create_module.2.html">sys_create_module</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/module.c">kernel/module.c</a></td>
+<td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>128</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/init_module.2.html">sys_init_module</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/module.c">kernel/module.c</a></td>
+<td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module">struct module *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>129</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/delete_module.2.html">sys_delete_module</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/module.c">kernel/module.c</a></td>
+<td>const char *</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>130</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/get_kernel_syms.2.html">sys_get_kernel_syms</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/module.c">kernel/module.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#kernel_sym">struct kernel_sym *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>131</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/quotactl.2.html">sys_quotactl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/dquot.c">fs/dquot.c</a></td>
+<td>int</td><td>const char *</td><td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#caddr_t">caddr_t</a></td><td>-</td></tr>
+
+<tr><td>132</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getpgid.2.html">sys_getpgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>133</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fchdir.2.html">sys_fchdir</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>unsigned int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>134</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/bdflush.2.html">sys_bdflush</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/buffer.c">fs/buffer.c</a></td>
+<td>int</td><td>long</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>135</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sysfs.2.html">sys_sysfs</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/super.c">fs/super.c</a></td>
+<td>int</td><td>unsigned long</td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>136</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/personality.2.html">sys_personality</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/exec_domain.c">kernel/exec_domain.c</a></td>
+<td>unsigned long</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>138</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setfsuid.2.html">sys_setfsuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>139</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setfsgid.2.html">sys_setfsgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>140</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/llseek.2.html">sys_llseek</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned int</td><td>unsigned long</td><td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#loff_t">loff_t *</a></td><td>unsigned int</td></tr>
+
+<tr><td>141</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getdents.2.html">sys_getdents</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/readdir.c">fs/readdir.c</a></td>
+<td>unsigned int</td><td>void *</td><td>unsigned int</td><td>-</td><td>-</td></tr>
+
+<tr><td>142</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/select.2.html">sys_select</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/select.c">fs/select.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#fd_set">fd_set *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#fd_set">fd_set *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#fd_set">fd_set *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval *</a></td></tr>
+
+<tr><td>143</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/flock.2.html">sys_flock</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/locks.c">fs/locks.c</a></td>
+<td>unsigned int</td><td>unsigned int</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>144</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/msync.2.html">sys_msync</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/filemap.c">mm/filemap.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>int</td><td>-</td><td>-</td></tr>
+
+<tr><td>145</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/readv.2.html">sys_readv</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#iovec">const struct iovec *</a></td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>146</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/writev.2.html">sys_writev</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#iovec">const struct iovec *</a></td><td>unsigned long</td><td>-</td><td>-</td></tr>
+
+<tr><td>147</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getsid.2.html">sys_getsid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>148</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/fdatasync.2.html">sys_fdatasync</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/buffer.c">fs/buffer.c</a></td>
+<td>unsigned int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>149</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sysctl.2.html">sys_sysctl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sysctl.c">kernel/sysctl.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__sysctl_args">struct __sysctl_args *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>150</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mlock.2.html">sys_mlock</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mlock.c">mm/mlock.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>151</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/munlock.2.html">sys_munlock</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mlock.c">mm/mlock.c</a></td>
+<td>unsigned long</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>152</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mlockall.2.html">sys_mlockall</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mlock.c">mm/mlock.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>153</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/munlockall.2.html">sys_munlockall</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mlock.c">mm/mlock.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>154</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_setparam.2.html">sys_sched_setparam</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sched_param">struct sched_param *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>155</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_getparam.2.html">sys_sched_getparam</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sched_param">struct sched_param *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>156</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_setscheduler.2.html">sys_sched_setscheduler</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sched_param">struct sched_param *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>157</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_getscheduler.2.html">sys_sched_getscheduler</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>158</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_yield.2.html">sys_sched_yield</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>159</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_get_priority_max.2.html">sys_sched_get_priority_max</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>160</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_get_priority_min.2.html">sys_sched_get_priority_min</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td>int</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>161</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sched_rr_get_interval.2.html">sys_sched_rr_get_interval</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timespec">struct timespec *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>162</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/nanosleep.2.html">sys_nanosleep</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sched.c">kernel/sched.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timespec">struct timespec *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timespec">struct timespec *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>163</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/mremap.2.html">sys_mremap</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/mremap.c">mm/mremap.c</a></td>
+<td>unsigned long</td><td>unsigned long</td><td>unsigned long</td><td>unsigned long</td><td>-</td></tr>
+
+<tr><td>164</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setresuid.2.html">sys_setresuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>165</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getresuid.2.html">sys_getresuid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>166</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/vm86.2.html">sys_vm86</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/vm86.c">arch/i386/kernel/vm86.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#vm86_struct">struct vm86_struct *</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>167</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/query_module.2.html">sys_query_module</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/module.c">kernel/module.c</a></td>
+<td>const char *</td><td>int</td><td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t *</a></td></tr>
+
+<tr><td>168</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/poll.2.html">sys_poll</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/select.c">fs/select.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pollfd">struct pollfd *</a></td><td>unsigned int</td><td>long</td><td>-</td><td>-</td></tr>
+
+<tr><td>169</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/nfsservctl.2.html">sys_nfsservctl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/filesystems.c">fs/filesystems.c</a></td>
+<td>int</td><td>void *</td><td>void *</td><td>-</td><td>-</td></tr>
+
+<tr><td>170</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/setresgid.2.html">sys_setresgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>171</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/getresgid.2.html">sys_getresgid</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>172</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/prctl.2.html">sys_prctl</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/sys.c">kernel/sys.c</a></td>
+<td>int</td><td>unsigned long</td><td>unsigned long</td><td>unsigned long</td><td>unsigned long</td></tr>
+
+<tr><td>173</td><td>sys_rt_sigreturn</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/signal.c">arch/i386/kernel/signal.c</a></td>
+<td>unsigned long</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>174</td><td>sys_rt_sigaction</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigaction">const struct sigaction *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigaction">struct sigaction *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td></tr>
+
+<tr><td>175</td><td>sys_rt_sigprocmask</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigset_t">sigset_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigset_t">sigset_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td></tr>
+
+<tr><td>176</td><td>sys_rt_sigpending</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigset_t">sigset_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>177</td><td>sys_rt_sigtimedwait</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigset_t">const sigset_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#siginfo_t">siginfo_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timespec">const struct timespec *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td></tr>
+
+<tr><td>178</td><td>sys_rt_sigqueueinfo</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/signal.c">kernel/signal.c</a></td>
+<td>int</td><td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#siginfo_t">siginfo_t *</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>179</td><td>sys_rt_sigsuspend</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/signal.c">arch/i386/kernel/signal.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigset_t">sigset_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>180</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/pread.2.html">sys_pread</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned int</td><td>char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#loff_t">loff_t</a></td><td>-</td></tr>
+
+<tr><td>181</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/pread.2.html">sys_pwrite</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/read_write.c">fs/read_write.c</a></td>
+<td>unsigned int</td><td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#loff_t">loff_t</a></td><td>-</td></tr>
+
+<tr><td>182</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/chown.2.html">sys_chown</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/open.c">fs/open.c</a></td>
+<td>const char *</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#gid_t">gid_t</a></td><td>-</td><td>-</td></tr>
+
+<tr><td>183</td><td>sys_getcwd</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/fs/dcache.c">fs/dcache.c</a></td>
+<td>char *</td><td>unsigned long</td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>184</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/capget.2.html">sys_capget</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/capability.c">kernel/capability.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#cap_user_header_t">cap_user_header_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#cap_user_data_t">cap_user_data_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>185</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/capget.2.html">sys_capset</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/kernel/capability.c">kernel/capability.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#cap_user_header_t">cap_user_header_t</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#cap_user_data_t">const cap_user_data_t</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>186</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sigaltstack.2.html">sys_sigaltstack</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/signal.c">arch/i386/kernel/signal.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#stack_t">const stack_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#stack_t">stack_t *</a></td><td>-</td><td>-</td><td>-</td></tr>
+
+<tr><td>187</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/sendfile.2.html">sys_sendfile</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/mm/filemap.c">mm/filemap.c</a></td>
+<td>int</td><td>int</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#off_t">off_t *</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a></td><td>-</td></tr>
+
+<tr><td>190</td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/man/vfork.2.html">sys_vfork</a></td><td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/process.c">arch/i386/kernel/process.c</a></td>
+<td><a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pt_regs">struct pt_regs</a></td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+
+</tbody></table>
+
+<p>
+<a name="note117"><b>Note for sys_ipc</b> (117)</a>: this syscall takes six arguments, so it can't fit
+into the five registers %ebx - %edi; the last parameter (not shown) is of type 'long'. This
+syscall requires a special call method where a pointer is put in %ebx which points to an array
+containing the six arguments.
+</p>
+
+
+<h2>System Call Numbers</h2>
+
+<p>
+For the numbers of the syscalls, look in
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/entry.S">arch/i386/kernel/entry.S</a>
+for <strong>sys_call_table</strong>.
+The syscall numbers are offsets into that table.
+Several spots in the table are occupied by the syscall
+<strong>sys_ni_syscall</strong>. This is a placeholder
+that either replaces an obsolete syscall or reserves a spot for
+future syscalls.
+</p>
+
+<p> Incidentally, the system calls are called from the function
+<strong>system_call</strong> in the same file; in particular,
+they are called with the assembly instruction
+'call&nbsp;*SYMBOL_NAME(sys_call_table)(,%eax,4)'.
+The part '*SYMBOL_NAME(sys_call_table)' just gets
+replaced by a symbol name in <strong>sys_call_table</strong>.
+<strong>SYMBOL_NAME</strong> is a macro defined in
+<a href="https://www.informatik.htw-dresden.de/usr/src/linux/include/linux/linkage.h">include/linux/linkage.h</a>, and it just replaces
+itself with its argument.
+
+</p><h2>Typedefs</h2>
+
+<p>Here are the typedef declarations in the prototypes above:</p>
+
+<table border="1">
+
+<tbody><tr><th valign="top"><a name="atomic_t">atomic_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/atomic.h">include/asm/atomic.h</a>:<br>
+#ifdef __SMP__<br>
+typedef struct { volatile int counter; } atomic_t;<br>
+#else<br>
+typedef struct { int counter; } atomic_t;<br>
+#endif
+</td>
+</tr>
+
+<tr><th valign="top"><a name="caddr_t">caddr_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef char * __kernel_caddr_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_caddr_t caddr_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="cap_user_header_t">cap_user_header_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/capability.h">include/linux/capability.h</a>:<br>
+typedef struct __user_cap_header_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__u32">__u32</a> version;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int pid;<br>
+} *cap_user_header_t;
+</td>
+</tr>
+ 
+<tr><th valign="top"><a name="cap_user_data_t">cap_user_data_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/capability.h">include/linux/capability.h</a>:<br>
+typedef struct __user_cap_data_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__u32">__u32</a> effective;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__u32">__u32</a> permitted;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__u32">__u32</a> inheritable;<br>
+} *cap_user_data_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="clock_t">clock_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef long __kernel_clock_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_clock_t clock_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="dev_t">dev_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned short __kernel_dev_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_dev_t dev_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="fd_set">fd_set</a></th>
+<td>
+include/linux/posix_types.h<br>
+#define __FD_SETSIZE  1024<br>
+#define __NFDBITS     (8 * sizeof(unsigned long))<br>
+#define __FDSET_LONGS (__FD_SETSIZE/__NFDBITS)<br>
+(==&gt; __FDSET_LONGS == 32)<br>
+<br>
+typedef struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long fds_bits [__FDSET_LONGS];<br>
+} __kernel_fd_set;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_fd_set fd_set;<br>
+</td>
+</tr>
+
+<tr><th valign="top"><a name="gid_t">gid_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned short __kernel_gid_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_gid_t gid_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__kernel_daddr_t">__kernel_daddr_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef int __kernel_daddr_t;<br>
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__kernel_fsid_t">__kernel_fsid_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:<br>
+typedef struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int __val[2];<br>
+} __kernel_fsid_t;<br>
+<br>
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__kernel_ino_t">__kernel_ino_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned long __kernel_ino_t;<br>
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__kernel_size_t">__kernel_size_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned int __kernel_size_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="loff_t">loff_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef long long __kernel_loff_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_loff_t loff_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="mode_t">mode_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned short __kernel_mode_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_mode_t mode_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="off_t">off_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef long __kernel_off_t;
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_off_t off_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="old_sigset_t">old_sigset_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/signal.h">include/asm/signal.h</a>:typedef unsigned long old_sigset_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="pid_t">pid_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef int __kernel_pid_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_pid_t pid_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__sighandler_t">__sighandler_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/signal.h">include/asm/signal.h</a>:typedef void (*__sighandler_t)(int);
+</td>
+</tr>
+
+<tr><th valign="top"><a name="siginfo_t">siginfo_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/siginfo.h">include/asm/siginfo.h</a>:<br>
+#define SI_MAX_SIZE 128<br>
+#define SI_PAD_SIZE ((SI_MAX_SIZE/sizeof(int)) - 3)<br>
+(==&gt; SI_PAD_SIZE == 29)<br>
+<br>
+typedef struct siginfo {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int si_signo;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int si_errno;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int si_code;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;union {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int _pad[SI_PAD_SIZE];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* kill() */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a> _pid; /* sender's pid */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a> _uid; /* sender's uid */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _kill;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* POSIX.1b timers */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int _timer1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int _timer2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _timer;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* POSIX.1b signals */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a> _pid; /* sender's pid */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a> _uid; /* sender's uid */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigval_t _sigval;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _rt;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* SIGCHLD */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#pid_t">pid_t</a> _pid; /* which child */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#uid_t">uid_t</a> _uid; /* sender's uid */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int _status; /* exit code */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#clock_t">clock_t</a> _utime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#clock_t">clock_t</a> _stime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _sigchld;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* SIGILL, SIGFPE, SIGSEGV, SIGBUS */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void *_addr; /* faulting insn/memory ref. */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _sigfault;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* SIGPOLL */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int _band; /* POLL_IN, POLL_OUT, POLL_MSG */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int _fd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _sigpoll;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} _sifields;<br>
+} siginfo_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="sigset_t">sigset_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/signal.h">include/asm/signal.h</a>:typedef unsigned long sigset_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="size_t">size_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned int __kernel_size_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_size_t size_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="ssize_t">ssize_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef int __kernel_ssize_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_ssize_t ssize_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="stack_t">stack_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/signal.h">include/asm/signal.h</a>:<br>
+typedef struct sigaltstack {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void *ss_sp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int ss_flags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a> ss_size;<br>
+} stack_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="suseconds_t">suseconds_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef long __kernel_suseconds_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_suseconds_t suseconds_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="time_t">time_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef long __kernel_time_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_time_t time_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="uid_t">uid_t</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/posix_types.h">include/asm/posix_types.h</a>:typedef unsigned short __kernel_uid_t;<br>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef __kernel_uid_t uid_t;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="uint">uint</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:typedef unsigned int uint;
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__u32">__u32</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/types.h">include/asm/types.h</a>:typedef unsigned int __u32;
+</td>
+</tr>
+
+</tbody></table>
+
+<p>&nbsp;</p>
+
+<h2>Structs</h2>
+
+<p>Here are the struct declarations for the table at the top:</p>
+
+<table border="1">
+
+<tbody><tr><th valign="top"><a name="exception_table_entry">exception_table_entry</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/module.h">include/linux/module.h</a>:<br>
+struct exception_table_entry {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long insn, fixup;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="iovec">iovec</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/uio.h">include/linux/uio.h</a>:<br>
+struct iovec {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void *iov_base;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__kernel_size_t">__kernel_size_t</a> iov_len;
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="itimerval">itimerval</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/time.h">include/linux/time.h</a>:<br>
+struct itimerval {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval</a> it_interval; /* timer interval */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval</a> it_value; /* current value */<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="kernel_sym">kernel_sym</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/module.h">include/linux/module.h</a>:<br>
+struct kernel_sym {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long value;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char name[60];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="mmap_arg_struct">mmap_arg_struct</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a>:<br>
+struct mmap_arg_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long addr;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long len;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long prot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long flags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long fd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long offset;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="module">module</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/module.h">include/linux/module.h</a>:<br>
+struct module {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long size_of_struct;  /* sizeof(module) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module">struct module</a> *next;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char *name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;union {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#atomic_t">atomic_t</a> usecount;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long pad;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} uc;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long flags;   /* AUTOCLEAN et al */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned nsyms;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned ndeps;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module_symbol">struct module_symbol</a> *syms;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module_ref">struct module_ref</a> *deps;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module_ref">struct module_ref</a> *refs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int (*init)(void);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void (*cleanup)(void);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const <a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#exception_table_entry">struct exception_table_entry</a> *ex_table_start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const <a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#exception_table_entry">struct exception_table_entry</a> *ex_table_end;<br>
+        /* Members past this point are extensions to the basic<br>
+           module support and are optional.  Use mod_opt_member()<br>
+           to examine them.  */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const <a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module_persist">struct module_persist</a> *persist_start;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const <a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module_persist">struct module_persist</a> *persist_end;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int (*can_unload)(void);<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="module_persist">module_persist</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/module.h">include/linux/module.h</a>:<br>
+struct module_persist; /* yes, it's empty */
+</td>
+</tr>
+
+<tr><th valign="top"><a name="module_ref">module_ref</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/module.h">include/linux/module.h</a>:<br>
+struct module_ref {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module">struct module</a> *dep;  /* "parent" pointer */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module">struct module</a> *ref;  /* "child" pointer */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#module_ref">struct module_ref</a> *next_ref;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="module_symbol">module_symbol</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/module.h">include/linux/module.h</a>:<br>
+struct module_symbol {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long value;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char *name;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="new_utsname">new_utsname</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/utsname.h">include/linux/utsname.h</a>:<br>
+struct new_utsname {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char sysname[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char nodename[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char release[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char version[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char machine[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char domainname[65];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__old_kernel_stat">__old_kernel_stat</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/stat.h">include/asm/stat.h</a>:<br>
+struct __old_kernel_stat {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_dev;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_ino;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_mode;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_nlink;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_uid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_gid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_rdev;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_atime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_mtime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_ctime;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="oldold_utsname">oldold_utsname</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/utsname.h">include/linux/utsname.h</a>:<br>
+struct oldold_utsname {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char sysname[9];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char nodename[9];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char release[9];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char version[9];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char machine[9];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="old_sigaction">old_sigaction</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/signal.h">include/asm/signal.h</a>:<br>
+struct old_sigaction {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__sighandler_t">__sighandler_t</a> sa_handler;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#old_sigset_t">old_sigset_t</a> sa_mask;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long sa_flags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void (*sa_restorer)(void);<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="old_utsname">old_utsname</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/utsname.h">include/linux/utsname.h</a>:<br>
+struct old_utsname {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char sysname[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char nodename[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char release[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char version[65];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char machine[65];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="pollfd">pollfd</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/poll.h">include/asm/poll.h</a>:<br>
+struct pollfd {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int fd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;short events;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;short revents;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="pt_regs">pt_regs</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/ptrace.h">include/asm/ptrace.h</a>:<br>
+struct pt_regs {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ebx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ecx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long edx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long esi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long edi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ebp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long eax;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  xds;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  xes;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long orig_eax;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long eip;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  xcs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long eflags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long esp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  xss;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="revectored_struct">revectored_struct</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/vm86.h">include/asm/vm86.h</a>:<br>
+struct revectored_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long __map[8];<br>
+};<br>
+</td>
+</tr>
+
+<tr><th valign="top"><a name="rlimit">rlimit</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/resource.h">include/linux/resource.h</a>:<br>
+struct rlimit {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long rlim_cur;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long rlim_max;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="rusage">rusage</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/resource.h">include/linux/resource.h</a>:<br>
+struct rusage {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval</a> ru_utime;  /* user time used */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval</a> ru_stime;  /* system time used */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_maxrss;    /* maximum resident set size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_ixrss;     /* integral shared memory size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_idrss;     /* integral unshared data size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_isrss;     /* integral unshared stack size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_minflt;    /* page reclaims */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_majflt;    /* page faults */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_nswap;     /* swaps */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_inblock;   /* block input operations */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_oublock;   /* block output operations */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_msgsnd;    /* messages sent */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_msgrcv;    /* messages received */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_nsignals;  /* signals received */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_nvcsw;     /* voluntary context switches */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ru_nivcsw;    /* involuntary '' */<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="sched_param">sched_param</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/sched.h">include/linux/sched.h</a>:<br>
+struct sched_param {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int sched_priority;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="sel_arg_struct">sel_arg_struct</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/arch/i386/kernel/sys_i386.c">arch/i386/kernel/sys_i386.c</a>:<br>
+struct sel_arg_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#fd_set">fd_set</a> *inp, *outp, *exp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval</a> *tvp;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="sigaction">sigaction</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/signal.h">include/asm/signal.h</a>:<br>
+struct sigaction {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__sighandler_t">__sighandler_t</a> sa_handler;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long sa_flags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void (*sa_restorer)(void);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#sigset_t">sigset_t</a> sa_mask;  /* mask last for extensibility */<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="stat">stat</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/stat.h">include/asm/stat.h</a>:<br>
+struct stat {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_dev;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short __pad1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long st_ino;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_mode;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_nlink;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_uid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_gid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short st_rdev;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short __pad2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_size;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_blksize;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_blocks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_atime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  __unused1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_mtime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  __unused2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  st_ctime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  __unused3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  __unused4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long  __unused5;<br>
+</td>
+</tr>
+
+<tr><th valign="top"><a name="statfs">statfs</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/statfs.h">include/asm/statfs.h</a>:<br>
+struct statfs {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_type;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_bsize;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_blocks;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_bfree;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_bavail;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_files;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_ffree;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__kernel_fsid_t">__kernel_fsid_t</a> f_fsid;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_namelen;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long f_spare[6];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="__sysctl_args">__sysctl_args</a></th>
+<td>
+include/linux/sysctl.h<br>
+struct __sysctl_args {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int *name;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int nlen;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void *oldval;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a> *oldlenp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void *newval;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#size_t">size_t</a> newlen;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long __unused[4];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="sysinfo">sysinfo</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/kernel.h">include/linux/kernel.h</a>:<br>
+struct sysinfo {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long uptime; /* Seconds since boot */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long loads[3]; /* 1, 5, and 15 minute load averages */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long totalram; /* Total usable main memory size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long freeram;  /* Available memory size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long sharedram; /* Amount of shared memory */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long bufferram; /* Memory used by buffers */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long totalswap; /* Total swap space size */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long freeswap;  /* swap space still available */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short procs;   /* Number of current processes */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char _f[22];  /* Pads structure to 64 bytes */<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="timex">timex</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/timex.h">include/linux/timex.h</a>:<br>
+struct timex {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int modes; /* mode selector */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long offset;        /* time offset (usec) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long freq;          /* frequency offset (scaled ppm) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long maxerror;      /* maximum error (usec) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long esterror;      /* estimated error (usec) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int status;         /* clock command/status */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long constant;      /* pll time constant */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long precision;     /* clock precision (usec) (read only) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long tolerance;     /* clock frequency tolerance (ppm)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                     * (read only)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                     */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#timeval">struct timeval</a> time;    /* (read only) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long tick;          /* (modified) usecs between clock ticks */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ppsfreq;       /* pps frequency (scaled ppm) (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long jitter;        /* pps jitter (us) (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int shift;          /* interval duration (s) (shift) (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long stabil;        /* pps stability (scaled ppm) (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long jitcnt;        /* jitter limit exceeded (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long calcnt;        /* calibration intervals (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long errcnt;        /* calibration errors (ro) */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long stbcnt;        /* stability limit exceeded (ro) */<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  :32; int  :32; int  :32; int  :32;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  :32; int  :32; int  :32; int  :32;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int  :32; int  :32; int  :32; int  :32;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="timespec">timespec</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/time.h">include/linux/time.h</a>:<br>
+struct timespec {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#time_t">time_t</a> tv_sec; /* seconds */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long tv_nsec;  /* nanoseconds */<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="timeval">timeval</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/time.h">include/linux/time.h</a>:<br>
+struct timeval {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#time_t">time_t</a> tv_sec; /* seconds */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#suseconds_t">suseconds_t</a> tv_usec; /* microseconds */<br>
+};
+</td>
+</tr>
+
+
+<tr><th valign="top"><a name="timezone">timezone</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/time.h">include/linux/time.h</a>:<br>
+struct timezone {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int tz_minuteswest; /* minutes west of Greenwich */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int tz_dsttime; /* type of dst correction */<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="tms">tms</a></th>
+<td>
+include/linux/times.h<br>
+struct tms {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#clock_t">clock_t</a> tms_utime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#clock_t">clock_t</a> tms_stime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#clock_t">clock_t</a> tms_cutime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#clock_t">clock_t</a> tms_cstime;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="ustat">ustat</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/types.h">include/linux/types.h</a>:<br>
+struct ustat {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__kernel_daddr_t">__kernel_daddr_t</a> f_tfree;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#__kernel_ino_t">__kernel_ino_t</a> f_tinode;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char f_fname[6];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char f_fpack[6];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="utimbuf">utimbuf</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/linux/utime.h">include/linux/utime.h</a>:<br>
+struct utimbuf {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#time_t">time_t</a> actime;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#time_t">time_t</a> modtime;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="vm86plus_info_struct">vm86plus_info_struct</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/vm86.h">include/asm/vm86.h</a>:<br>
+struct vm86plus_info_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long force_return_for_pic:1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long vm86dbg_active:1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long vm86dbg_TFpendig:1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long unused:28;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long is_vm86pus:1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned char vm86dbg_intxxtab[32];<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="vm86plus_struct">vm86plus_struct</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/vm86.h">include/asm/vm86.h</a>:<br>
+struct vm86plus_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#vm86_regs">struct vm86_regs</a> regs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long flags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long screen_bitmap;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long cpu_type;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#revectored_struct">struct revectored_struct</a> int_revectored;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#revectored_struct">struct revectored_struct</a> int21_revectored;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#vm86plus_info_struct">struct vm86plus_info_struct</a> vm86plus;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="vm86_regs">vm86_regs</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/vm86.h">include/asm/vm86.h</a>:<br>
+struct vm86_regs {<br>
+/* normal regs, with special meaning for the segment descriptors.. */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ebx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ecx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long edx;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long esi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long edi;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long ebp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long eax;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long __null_ds;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long __null_es;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long __null_fs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long __null_gs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long orig_eax;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long eip;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short cs, __csh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long eflags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long esp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short ss, __ssh;<br>
+/* these are specific to v86 mode: */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short es, __esh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short ds, __dsh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short fs, __fsh;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned short gs, __gsh;<br>
+};
+</td>
+</tr>
+
+<tr><th valign="top"><a name="vm86_struct">vm86_struct</a></th>
+<td>
+<a href="https://www.informatik.htw-dresden.de/~beck/ASM/src/include/asm/vm86.h">include/asm/vm86.h</a>:<br>
+struct vm86_struct {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#vm86_regs">struct vm86_regs</a> regs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long flags;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long screen_bitmap;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long cpu_type;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#revectored_struct">struct revectored_struct</a> int_revectored;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.informatik.htw-dresden.de/~beck/ASM/syscall_list.html#revectored_struct">struct revectored_struct</a> int21_revectored;<br>
+};
+</td>
+</tr>
+
+
+</tbody></table>
+
+
+
+
+
+
+<!--
+
+fs/open.c:int sys_utimes(char * filename, struct timeval * utimes)
+ipc/msg.c:int sys_msgsnd (int msqid, struct msgbuf *msgp, size_t msgsz, int msgflg)
+ipc/msg.c:int sys_msgrcv (int msqid, struct msgbuf *msgp, size_t msgsz,
+ipc/msg.c:int sys_msgget (key_t key, int msgflg)
+ipc/msg.c:int sys_msgctl (int msqid, int cmd, struct msqid_ds *buf)
+ipc/util.c:int sys_msgget (key_t key, int msgflg)
+ipc/util.c:int sys_msgsnd (int msqid, struct msgbuf *msgp, size_t msgsz, int msgflg)
+ipc/util.c:int sys_msgrcv (int msqid, struct msgbuf *msgp, size_t msgsz, long msgtyp,
+ipc/util.c:int sys_msgctl (int msqid, int cmd, struct msqid_ds *buf)
+ipc/sem.c:int sys_semget (key_t key, int nsems, int semflg)
+ipc/sem.c:int sys_semctl (int semid, int semnum, int cmd, union semun arg)
+ipc/sem.c:int sys_semop (int semid, struct sembuf *tsops, unsigned nsops)
+ipc/util.c:int sys_semget (key_t key, int nsems, int semflg)
+ipc/util.c:int sys_semop (int semid, struct sembuf *sops, unsigned nsops)
+ipc/util.c:int sys_semctl (int semid, int semnum, int cmd, union semun arg)
+ipc/shm.c:int sys_shmget (key_t key, int size, int shmflg)
+ipc/shm.c:int sys_shmctl (int shmid, int cmd, struct shmid_ds *buf)
+ipc/shm.c:int sys_shmat (int shmid, char *shmaddr, int shmflg, ulong *raddr)
+ipc/shm.c:int sys_shmdt (char *shmaddr)
+ipc/util.c:int sys_shmget (key_t key, int size, int flag)
+ipc/util.c:int sys_shmat (int shmid, char *shmaddr, int shmflg, ulong *addr)
+ipc/util.c:int sys_shmdt (char *shmaddr)
+ipc/util.c:int sys_shmctl (int shmid, int cmd, struct shmid_ds *buf)
+
+net/socket.c:int sys_socketpair(int family, int type, int protocol, int usockvec[2])
+net/socket.c:int sys_socket(int family, int type, int protocol)
+net/socket.c:int sys_bind(int fd, struct sockaddr *umyaddr, int addrlen)
+net/socket.c:int sys_listen(int fd, int backlog)
+net/socket.c:int sys_accept(int fd, struct sockaddr *upeer_sockaddr, int *upeer_addrlen)
+net/socket.c:int sys_connect(int fd, struct sockaddr *uservaddr, int addrlen)
+net/socket.c:int sys_getsockname(int fd, struct sockaddr *usockaddr, int *usockaddr_len)
+net/socket.c:int sys_getpeername(int fd, struct sockaddr *usockaddr, int *usockaddr_len)
+net/socket.c:int sys_sendto(int fd, void * buff, size_t len, unsigned flags,
+net/socket.c:int sys_send(int fd, void * buff, size_t len, unsigned flags)
+net/socket.c:int sys_recvfrom(int fd, void * ubuf, size_t size, unsigned flags,
+net/socket.c:int sys_recv(int fd, void * ubuf, size_t size, unsigned flags)
+net/socket.c:int sys_setsockopt(int fd, int level, int optname, char *optval, int optlen)
+net/socket.c:int sys_getsockopt(int fd, int level, int optname, char *optval, int *optlen)
+net/socket.c:int sys_shutdown(int fd, int how)
+net/socket.c:int sys_sendmsg(int fd, struct msghdr *msg, unsigned flags)
+net/socket.c:int sys_recvmsg(int fd, struct msghdr *msg, unsigned int flags)
+-->
+</body></html>
